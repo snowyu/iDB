@@ -25,3 +25,18 @@ pip-log.txt
 
 #Mr Developer
 .mr.developer.cfg
+
+# Object files
+*.o
+
+# Libraries
+*.lib
+
+# Shared objects (inc. Windows DLLs)
+*.dll
+*.so
+
+# Executables
+*.exe
+*.out
+
