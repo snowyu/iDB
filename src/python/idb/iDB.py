@@ -1,7 +1,7 @@
 #!/usr/bin/python
 #coding:utf-8
 
-#import os
+import os
 from os import makedirs, path
 import sys, errno
 import glob
@@ -20,8 +20,24 @@ def mkdir_p(path):
             pass
         else: raise
 
+def touch(fname, times = None):
+    #fhandle = 
+    file(fname, 'a').close()
+    if times != None:
+        try:
+            os.futimes(fname, times)
+        except ENOSYS:
+            os.utime(fname, times)
+        #finally:
+        #    fhandle.close()
+
 def str2hex(value):
+    if value[0]  == '$':
+        value = value[1:]
     return int(value, 16)
+
+def hex2str(value):
+    return '$' + hex(value)[2:]
 
 def str2bool(value):
     """
@@ -48,7 +64,7 @@ IDB_SPEC_VER = '0.1'
 IDB_KEY_TYPE = '.type'
 IDB_VALUE_FILE = '=*'
 IDB_TYPES = {'string': str, 'object': dict, 'integer': int, 'hex': str2hex, 'float': float, 'boolean': str2bool}
-IDB_LTYPES = {str: 'String', dict: 'Object', int: 'Integer', str2hex: 'Hex', float: 'Float', str2bool: 'Boolean'}
+IDB_LTYPES = {str: 'String', dict: 'Object', int: 'Integer', hex: 'Hex', float: 'Float', bool: 'Boolean'}
 
 # No DB DIR Specified
 EIDBNODIR  =  -100
@@ -65,23 +81,32 @@ class iValue(object):
         self.ValueType = aType
         self.value = aValue
 
-def DBValue2Str(aValue):
+# Convert the DBValue to String
+def DBValue2Str(aValue, aType):
     """
     """
 def Str2DBValue(aStr, aType):
     """
     """
-def AddDBValue(aDir, aValue):
+def CreateDBString(aDir, aString):
     """
     """
+    aFile = path.join(aDir, '=' + aString)
+    aDir = path.dirname(aFile)
+    aString = path.basename(aFile)
+    mkdir_p(aDir)
+    touch(aFile)
 # the helper functions to operate the iDB
 def GetDBValue(aDir):
     vValues = path.join(aDir, IDB_VALUE_FILE)
-    vValues = glob.glob(vValue) # Search dir by pattern
+    vValues = glob.glob(vValues) # Search dir by pattern
     if len(vValues) > 0:
+        # load value into vValues now.
         for i, value in enumerate(vValues):
-            vValues[i] = value[1:]
-        vKeyTypeDir = path.join(vDir, IDB_KEY_TYPE)
+            vValues[i] = value.replace(path.join(aDir, '='),'')  #remove the prefix "="
+
+        # try to determine the value's type.
+        vKeyTypeDir = path.join(aDir, IDB_KEY_TYPE)
         vKeyType = None
         if path.exists(vKeyTypeDir):
             value = glob.glob(path.join(vKeyTypeDir, IDB_VALUE_FILE))
@@ -116,7 +141,14 @@ def GetDBValue(aDir):
                         pass
                 if vKeyType == None:
                     vKeyType = str
-                AddDBValue(vKeyTypeDir, IDB_LTYPES[vKeyType])
+                    # remove quote if any
+                    for i, value in enumerate(vValues):
+                        if vValues[i][0]  == '"' && vValues[i][-1]  == '"':
+                            vValues[i] = vValues[1:-1]
+                        elif vValues[i][0]  == '\'' && vValues[i][-1]  == '\'':
+                            vValues[i] = vValues[1:-1]
+
+                CreateDBString(vKeyTypeDir, IDB_LTYPES[vKeyType])
             else:
                 vValues = vKeyType(vValues)
         return vValues
