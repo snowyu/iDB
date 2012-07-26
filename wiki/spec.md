@@ -9,6 +9,12 @@ Key is always a directory.
 ## Value
 
 The Value is a file or directory. It must be started with "=".
+It must be '.value' name if cache the value to speed up.
+
+the blob value in the cache file is the real blob file name link.
+
+And it can be set to update to the cache file only for simple type.
+
 
 ## Root Dir
 

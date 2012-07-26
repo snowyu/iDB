@@ -63,6 +63,7 @@ IDB_SPEC_VER = '0.1'
 
 IDB_KEY_TYPE = '.type'
 IDB_VALUE_FILE = '=*'
+IDB_VALUE_CACHE_FILE = '.Value'
 IDB_TYPES = {'string': str, 'object': dict, 'integer': int, 'hex': str2hex, 'float': float, 'boolean': str2bool}
 IDB_LTYPES = {str: 'String', dict: 'Object', int: 'Integer', hex: 'Hex', float: 'Float', bool: 'Boolean'}
 
@@ -89,17 +90,30 @@ def Str2DBValue(aStr, aType):
     """
     """
 def CreateDBString(aDir, aString):
-    """
+    """Create aString in aDir
     """
     aFile = path.join(aDir, '=' + aString)
     aDir = path.dirname(aFile)
     aString = path.basename(aFile)
     mkdir_p(aDir)
     touch(aFile)
+
+def GetFileValue(aDir):
+    aFile = path.join(aDir, IDB_VALUE_CACHE_FILE)
+    result = None
+    try:
+        result = [line.strip() for line in open(aFile, 'r')]
+    except IOError, e:
+        if e.errno != errno.ENOENT: # No Such File
+            raise
+    if result == None:
+        aFile = path.join(aDir, IDB_VALUE_FILE)
+        result = glob.glob(aFile) # Search dir by pattern
+    return result
+
 # the helper functions to operate the iDB
 def GetDBValue(aDir):
-    vValues = path.join(aDir, IDB_VALUE_FILE)
-    vValues = glob.glob(vValues) # Search dir by pattern
+    vValues = GetFileValue(aDir) # Search dir by pattern
     if len(vValues) > 0:
         # load value into vValues now.
         for i, value in enumerate(vValues):
@@ -120,9 +134,17 @@ def GetDBValue(aDir):
                 if vValues[0] == '$':
                     try:
                         vValues  = int(vValues[1:], 16)
-                        vKeyType = str2hex
+                        vKeyType = hex
                     except ValueError:
                         pass
+                if vKeyType == None:
+                    if (vValues[i][0]  == '"' and vValues[i][-1]  == '"'):
+                        vValues[i] = vValues[1:-1]
+                        vKeyType = str
+                    elif (vValues[i][0]  == '\'' and vValues[i][-1]  == '\''):
+                        vValues[i] = vValues[1:-1]
+                        vKeyType = str
+
                 if vKeyType == None:
                     try:
                         vValues  = int(vValues)
@@ -132,20 +154,22 @@ def GetDBValue(aDir):
                 if vKeyType == None:
                     try:
                         vValues  = float(vValues)
+                        vKeyType = float
                     except ValueError:
                         pass
                 if vKeyType == None:
                     try:
                         vValues = str2bool(vValues)
+                        vKeyType = bool
                     except ValueError:
                         pass
                 if vKeyType == None:
                     vKeyType = str
                     # remove quote if any
                     for i, value in enumerate(vValues):
-                        if vValues[i][0]  == '"' && vValues[i][-1]  == '"':
+                        if vValues[i][0]  == '"' and vValues[i][-1]  == '"':
                             vValues[i] = vValues[1:-1]
-                        elif vValues[i][0]  == '\'' && vValues[i][-1]  == '\'':
+                        elif vValues[i][0]  == '\'' and vValues[i][-1]  == '\'':
                             vValues[i] = vValues[1:-1]
 
                 CreateDBString(vKeyTypeDir, IDB_LTYPES[vKeyType])
@@ -167,7 +191,7 @@ class iDB(object):
             self.version = self.Get('.db/version')
             if self.version  == None:
                 self.version = IDB_SPEC_VER
-"""
+    """
     def _TryHexGet(aValue):
         result = None
         if aValue[0] == '$':
@@ -176,7 +200,7 @@ class iDB(object):
             except ValueError:
                 pass
         return result
-"""
+    """
 
     def Get(self, key):
         """return the value of the key
@@ -191,5 +215,9 @@ class iDB(object):
         """
         """
     def Put(self, key, value):
+        """
+        """
     def Delete(self, key):
+        """
+        """
     
