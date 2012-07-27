@@ -5,9 +5,10 @@ import utils
 import errno
 import glob
 
-from utils import Str2Hex, Str2Bool, CreateDir, TouchFile 
 from os import path
 from shutil import rmtree
+
+from utils import Str2Hex, Str2Bool, CreateDir, TouchFile
 
 # Constants
 # the iDB Library version:
@@ -17,7 +18,7 @@ IDB_SPEC_VER = '0.1'
 
 IDB_KEY_TYPE = '.type'
 IDB_VALUE_FILE = '=*'
-IDB_VALUE_CACHE_FILE = '.Value'
+IDB_VALUE_CACHE_FILE = '.value'
 IDB_TYPES = {'string': str, 'object': dict, 'integer': int, 'hex': Str2Hex, 'float': float, 'boolean': Str2Bool}
 IDB_LTYPES = {str: 'String', dict: 'Object', int: 'Integer', hex: 'Hex', float: 'Float', bool: 'Boolean'}
 
