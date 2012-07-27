@@ -5,9 +5,18 @@ import string, random
 import os
 import errno
 
+from os import path
 
 def RandomString(size=6, chars=string.ascii_uppercase + string.digits):
     return ''.join(random.choice(chars) for x in range(size))
+
+# return the dir's count in aDir
+def GetDirCount(aDir):
+    return sum(1 for item in os.listdir(aDir) if path.isdir(path.join(aDir, item)))
+
+# return the file's count in aDir
+def GetFileCount(aDir):
+    return sum(1 for item in os.listdir(aDir) if path.isfile(path.join(aDir, item)))
 
 # Create all missed directoy 
 def CreateDir(aDir):
