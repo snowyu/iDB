@@ -3,6 +3,7 @@
 
 import pytest
 import unittest
+import os
 from os import path
 from idb.utils import RandomString
 from shutil import rmtree
@@ -11,9 +12,9 @@ from idb.helpers import CreateDBString, GetFileValue, GetDBValue
 ROOT_DIR = './mytestdb'
 FIXTURE_DIR = path.join(path.realpath(__file__), 'fixtures')
 
-def RandomKeyValue():
-    key = RandomString()
-    value = RandomString(26)
+def RandomKeyValue(aKeySize = 8, aValueSize = 26):
+    key = RandomString(aKeySize)
+    value = RandomString(aValueSize)
     return {'key': key, 'value': value}
 
 def RandomPairs(aSize = 99):
@@ -34,7 +35,10 @@ def check_pairs(pairs, wanted_result = True):
         vStr = GetFileValue(vDir)
         assert len(vStr) == 1
         vStr = vStr[0]
-        assert vStr == vWantedStr 
+        if wanted_result:
+            assert vStr == vWantedStr
+        else:
+            assert vStr != vWantedStr
 
 class BaseTest(unittest.TestCase):
     def setUp(self):
