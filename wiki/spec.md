@@ -22,10 +22,16 @@ the blob value in the cache file is a blob file name link.(maybe I can use the r
 And it can be set to update to the cache file only for simple type.
 
 
-## Root Dir
+## DB Meta Infomation (Root Dir)
 
 * .db/  Store the database meta infomation in the database root path.
-  * version  Store the iDB Specification Version
+  * version:Float  the iDB Specification Version
+  * config:Object  the DB Configration (can be overload via application)
+    * loadOnDemand:Boolean
+    * backup:Boolean
+    * xattr:Boolean
+    * raiseError:Object
+      * typeMissMatch:Boolean
 
 ## Value Type Descriptor
 
