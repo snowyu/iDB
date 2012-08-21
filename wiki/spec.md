@@ -6,7 +6,7 @@ the key base on a special urlencode.
 the value only for file name base on a special urlencode.
 
 * key's SafeChars: [/,' ']
-* value's SafeChars: [' '] 
+* value's SafeChars: [' ']
 
 ## Key
 
