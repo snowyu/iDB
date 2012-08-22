@@ -28,8 +28,8 @@ And it can be set to update to the cache file only for simple type.
   * version:Float  the iDB Specification Version
   * config:Object  the DB Configration (can be overload via application)
     * loadOnDemand:Boolean
-    * backup:Boolean
-    * xattr:Boolean
+    * storeInFile:Boolean
+    * storeInXattr:Boolean
     * raiseError:Object
       * typeMissMatch:Boolean
 
