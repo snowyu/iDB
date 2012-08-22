@@ -1,0 +1,6 @@
+[submodule "src/idb.go"]
+	path = src/idb.go
+	url = https://github.com/snowyu/idb.go
+[submodule "src/idb.py"]
+	path = src/idb.py
+	url = https://github.com/snowyu/idb.py
