@@ -65,16 +65,21 @@ the ".type" is the value type descriptor for the key.
   * .count: (if it's size is too large) (optional)
   * .level: (if it's size is too large) (optional)
   * .value: cache the dict's value if it's size is not too large. (optional)
-  * .fields: the keys list of the dict. seperate by "\n" (optional)
+  * .keys: the keys list of the dict. seperate by "\n" (optional)
 * Object<Dict>: the object must have a uniqueue id in the same list.
-  * .type: Object
+  * .type:  Object
   * .value  cache the object data. (optional)
-  * .fields collects the property names of this object, seperate by "\n". (optional)
+  * .keys   collects the property names of this object, seperate by "\n". (optional)
 * List<Dict>: the keys is numbers from 0..count-1
   * .type: List
   * .count(if it's size is too large)
   * .level(if it's size is too large)
-  * .value: a item each line(only id for the object item) if it's size is not too large (optional)
+  * .value: a item each line if it's size is not too large (optional)
+* Table<Dict>: the Item in Table is always the same type.
+  * .type: Table
+  * .count(if it's size is too large)
+  * .level(if it's size is too large)
+  * .value: a item each line if it's size is not too large (optional)
 
 * Item(Abstract):
   * Numberic(Abstract):
@@ -88,4 +93,30 @@ the ".type" is the value type descriptor for the key.
     * PagedDict
       * PagedList
 
+
+## Examples
+
+    mydb/
+        .db/.type                    # this cached file's content is "Object"
+        .db/version/.value           # this cached file's content is "0.1"
+        .db/version/.type            # this cached file's content is "Float"
+        mydict/.type                 # "Dict"
+               .keys                 # "mystr\nmyobj"
+               .value                # "'hi world'\n{item:1}"
+               mystr/.type           # "String"
+                     .value          # "hi world"
+               myobj/.type           # "Object"
+                     item/.type      # "Integer"
+                          .value     # "1"
+
+        users/.type                  # "Table:Object/User"
+        users/.keys                  # "Mike\nRose"
+        users/.value                 # "{name:"Mike Jones", sex:"Male"}\n..."
+        users/Mike/.type             # "Object/User"
+        users/Mike/.keys             # the field names: "name\nsex"
+        users/Mike/.value            # {name:"Mike Jones", sex:"Male"}
+        users/Mike/name/.type        # "String"
+        users/Mike/name/.value       # "'Mike Jones'"
+        users/Mike/sex/.value        # "Male"
+        users/Rose/
 
