@@ -25,8 +25,8 @@ And it can be set to update to the cache file only for simple type.
 ## DB Meta Infomation (Root Dir)
 
 * .db/  Store the database meta infomation in the database root path.
-  * version:Float  the iDB Specification Version
-  * config:Object  the DB Configration (can be overload via application)
+  * version:String  the iDB Specification Version
+  * config:Object   the DB Configration (can be overload via application)
     * loadOnDemand:Boolean
     * storeInFile:Boolean
     * storeInXattr:Boolean
@@ -36,6 +36,8 @@ And it can be set to update to the cache file only for simple type.
 ## Value Type Descriptor
 
 the ".type" is the value type descriptor for the key.
+the ".value" is the value's content for the key if any.
+the ".version" is the value type spec version if any.
 
 ## Value Type
 

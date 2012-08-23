@@ -1,35 +1,19 @@
 ## iDB Value Types Prototype
 
-
-### iDBValue Abstract Class
-
-* Manage the ValueType Classes
-
-Class iDBValue(Object):
-  Constructor Create(const aDB: iDB);
-  Class Method Register(const aType: iDBValue): Boolean;
-  Class Method UnRegister(const aType: iDBValue): Boolean;
-  Class Method Types: List;
-  Class Method[Virtual] Save(const aDB: iDB; const aKey: String): Boolean;
-  Class Method[Virtual] Load(const aDB: iDB; const aKey: String): Boolean;
-  Method Save(const aKey: String): Boolean;
-  Method Load(const aKey: String): Boolean;
-  Property database: iDB;
-  Property asString: String;
-  Property valueType: String;
-
-### String(iDBValue) Class
-
-### Numberic(iDBValue) Abstract Class
-
-### Dict(iDBValue) Class
+* String
+  * Integer
+  * Hex
+  * Boolean
+  * Float
+* Dict
+* List(Array)
 
 ## iDB Class Prototype
 
 
 ### Methods
 
-* Class Method New(path="", loadOnDemand=True, storeInFile=True, storeInXattr=False, opened=False): iDB;
+* Class Method New(path="", loadOnDemand=True, storeInFile=True, storeInXattr=False, opened=False, raiseError=[reTypeMissMatch]): iDB;
   * Create a new iDB object instance.
   * Parameters(Optional):
     * path: the database path
@@ -43,15 +27,18 @@ Class iDBValue(Object):
     * skipDBConfig: whether skip to load the dbconfig from database. the default is False.
 * Method Close();
   * Close a iDB database.
+* Method iGetValueAndType(const aKey: String): Dict;
+  * Internal Get the value and type of aKey as string.
+  * return : {value:"", type:""}
 * Method iGetValue(const aKey: String): String;
   * Internal Get the value of aKey as string.
 * Method iGetType(const aKey: String): String;
   * Internal Get the value type of aKey
+* Method iGetDict(const aKey: String): Dict;
 * Method iPut(const aKey: String, const aValue: String, const aType: String): String;
   * Internal save the value and value type of aKey as string.
 * Method iDelete(const aKey: String): Boolean;
   * Internal delete the key directly.
-* Method iGetDict(const aKey: String): Dict;
 * Method Get(const aKey: String): Variant;
 
 ### Properties
@@ -64,4 +51,6 @@ Class iDBValue(Object):
   * the database whether is opened.
 * version: String
   * the database specification version
+* raiseError: Set
+  * reTypeMissMatch: Bit0
 
