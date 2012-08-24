@@ -39,7 +39,23 @@
   * Internal save the value and value type of aKey as string.
 * Method iDelete(const aKey: String): Boolean;
   * Internal delete the key directly.
+* Method GetString(const aKey: String): String;
+  * Get String Type Value
+* Method GetInteger(const aKey: String): Integer;
+  * Get Integer Type Value
+* Method GetAsString(const aKey: String): String;
+  * Get As String
+* Method GetAsInteger(const aKey: String): Integer;
+  * Get As Integer
+* Method PutString(const aKey:)
 * Method Get(const aKey: String): Variant;
+* Method Put(const aKey: String; const aValue: Variant): Variant;
+* Method Delete(const aKey: String): Boolean;
+  * delete the key.
+* Method WildcardSearch(const aKeyPattern: String, const aPageNo=0, aPageSize: Integer=0): List;
+  * search the keys through wildcard(\*?) matching
+* Method RegexSearch(const aKeyPattern: String, const aPageNo=0, aPageSize: Integer=0): List;
+  * search the keys through Regular Expressions matching
 
 ### Properties
 
@@ -50,7 +66,7 @@
 * opened: Boolean
   * the database whether is opened.
 * version: String
-  * the database specification version
+  * the database specification version(ReadOnly)
 * raiseError: Set
   * reTypeMissMatch: Bit0
 
