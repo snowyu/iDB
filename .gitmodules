@@ -4,3 +4,6 @@
 [submodule "src/idb.py"]
 	path = src/idb.py
 	url = https://github.com/snowyu/idb.py
+[submodule "src/idb.php"]
+	path = src/idb.php
+	url = https://github.com/clouddb/idb.php
