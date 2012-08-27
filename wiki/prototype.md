@@ -54,7 +54,7 @@
   * delete the key.
 * Method WildcardSearch(const aKeyPattern: String, const aPageNo=0, aPageSize: Integer=0): List;
   * search the keys through wildcard(\*?) matching
-* Method RegexSearch(const aKeyPattern: String, const aPageNo=0, aPageSize: Integer=0): List;
+* Method RegExSearch(const aKeyPattern: String, const aPageNo=0, aPageSize: Integer=0): List;
   * search the keys through Regular Expressions matching
 
 ### Properties
