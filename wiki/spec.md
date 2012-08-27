@@ -1,6 +1,6 @@
 # iDB Specification
 
-Version: 0.2
+Version: 1(=0.2)
 
 the key base on a special urlencode.
 the value only for file name base on a special urlencode.
@@ -25,8 +25,8 @@ And it can be set to update to the cache file only for simple type.
 ## DB Meta Infomation (Root Dir)
 
 * .db/  Store the database meta infomation in the database root path.
-  * version:String  the iDB Specification Version
-  * config:Object   the DB Configration (can be overload via application)
+  * version:Integer  the iDB Specification Version.
+  * config:Object    the DB Configration (can be overload via application)
     * loadOnDemand:Boolean
     * storeInFile:Boolean
     * storeInXattr:Boolean
