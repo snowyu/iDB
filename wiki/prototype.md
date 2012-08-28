@@ -52,9 +52,9 @@
 * Method Put(const aKey: String; const aValue: Variant): Variant;
 * Method Delete(const aKey: String): Boolean;
   * delete the key.
-* Method WildcardSearch(const aKeyPattern: String, const aPageNo=0, aPageSize: Integer=0): List;
+* Method WildcardSearch(const aKeyPattern: String, const aPage=0, aPageSize: Integer=0): List;
   * search the keys through wildcard(\*?) matching
-* Method RegExSearch(const aKeyPattern: String, const aPageNo=0, aPageSize: Integer=0): List;
+* Method RegExSearch(const aKeyPattern: String, const aPage=0, aPageSize: Integer=0): List;
   * search the keys through Regular Expressions matching
 
 ### Properties
