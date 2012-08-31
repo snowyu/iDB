@@ -54,6 +54,8 @@
   * delete the key.
 * Method WildcardSearch(const aKeyPattern: String, const aPage=0, aPageSize: Integer=0): List;
   * search the keys through wildcard(\*?) matching
+  * return the matched keys list and pageNo, total count:
+    * {count:23, page:1, keys:[...]}
 * Method RegExSearch(const aKeyPattern: String, const aPage=0, aPageSize: Integer=0): List;
   * search the keys through Regular Expressions matching
 
