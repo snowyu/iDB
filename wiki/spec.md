@@ -1,11 +1,11 @@
 # iDB Specification
 
-Version: 1(=0.2)
+Version: 2
 
 the key base on a special urlencode.
 the value only for file name base on a special urlencode.
 
-* key's SafeChars: [/,' ']
+* key's SafeChars(DO NOT ESCAPED CHARS): [/,' ']
 * value's SafeChars: [' ']
 
 ## Key
@@ -35,9 +35,13 @@ And it can be set to update to the cache file only for simple type.
 
 ## Value Type Descriptor
 
-the ".type" is the value type descriptor for the key.
-the ".value" is the value's content for the key if any.
-the ".version" is the value type spec version if any.
+* the ".type" is the value type descriptor for the key.
+* the ".value" is the value's content for the key if any.
+* the ".version" is the value type spec version if any.
+* the ".keys" is the collection of keys in the current level(Dict) if any. 
+  * Spec v1: the key list in the dict. seperate by "\n" (optional)
+  * Spec v2: the key and type list in the dict. seperate by "\n" (optional)
+    * key:type\n
 
 ## Value Type
 
