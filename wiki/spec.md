@@ -99,6 +99,19 @@ And it can be set to update to the cache file only for simple type.
     * PagedDict
       * PagedList
 
+## Expires(v2 Optional)
+
+You can set a timeout on a key. After the timeout has expired, the key will automatically be deleted. A key with an associated timeout is often said to be volatile. The timeout is cleared only when the key is removed using the DEL command or overwritten using the SET/PUT commands.
+
+Normally iDB keys are created without an associated time to live. The key will simply live forever, unless it is removed by the user in an explicit way, for instance using the DEL command.
+
+* ".expires" the keys expiring information is stored as absolute Unix timestamps (in milliseconds). This means that the time is flowing even when the iDB instance is not active.
+
+Optmal: Add expires index to .db.
+
+## Index(v3)
+
+## Version(v4)
 
 ## Examples
 
