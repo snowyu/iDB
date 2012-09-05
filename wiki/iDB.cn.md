@@ -38,21 +38,21 @@ iDB 是结构化的面向列层级数据存储系统，所谓面向列(Column)�
 
 用户表(user):
 
-|登录名| 姓   |   名|email       |
-|smith |Smith | Mary|smich@so.com|
-|john  |John  | Sky |john@so.com |
+|登录名(PK)| 姓   |   名|email       |
+|smith     |Smith | Mary|smich@so.com|
+|john      |John  | Sky |john@so.com |
 
 
 项目表(project):
 
-|项目名|标题         |拥有者|
-|great |Great Project|smith |
+|项目名(PK)|标题         |拥有者|
+|great     |Great Project|smith |
 
 
-成员表(member):
+项目成员表(member):
 
-|项目名|成员名|角色     |
-|great |smith |developer|
+|项目名(PK)|成员名(PK)|角色     |
+|great     |smith     |developer|
 
 
 iDB 的数据呈现：
@@ -75,10 +75,82 @@ iDB 的数据呈现：
 就层级关系来看， "users/smith/lastName" 是 "users/smith"的列值, 而"users/smith"
 则又是 "users“ 的列值，它们的K/V关系在不断的转化...
 
+iDB的架构体系
+-------------
+
+* iDB Cloud Controller
+* iDB Cluster Controller
+* iDB Node Controller
+* iDB Storage Engine
+
+<pre>
+
+                  |Web Browser(Client)|
+                          ↓ 
+                  |DBCloud Controller|
+                   ↓               ↓
+       |DBCluster Controller|   |DBCluster Controller|
+          ↓            ↓
+|DBNode Controller|  |DBNode Controller|
+       ↓                 ↓
+    | iDB |           | iDB |
+
+
+DBCloud Controller
+      |__DBCluster Controller(Cluster A)
+      |__DBCluster Controller(Cluster B)
+      |__.......
+      |__DBCluster Controller(Cluster X)
+          |__DBNode Controller
+          |__DBNode Controller
+          |__......
+          |__DBNode Controller
+          |__DBNode Controller
+
+</pre>
+
+### DB Cloud Controller
+
+The DB cloud controller (DBCLC) is the top-level component, with one of each in a DB cloud installation. 
+The DB cloud controller offers RESTful API and a Web interface to the outside world. In addition to handling incoming requests, the DB cloud controller performs high-level resource scheduling 
+and system accounting.
+
+The DB Cloud Controller(DBCLC) can aggregate resources from multiple clusters (i.e., collections of nodes sharing a LAN segment, possibly residing behind a firewall). Each DB cluster needs a DB cluster controller (DBCC) for cluster-level scheduling and network control.
+
+manage the relation of the cluster for a Database:
+
+ * Master Replication
+ * Slave Replication()
+ * Cache Replication(if not find in local goto master to fetch, store only hot data ) 看上去DBCLC 需要有CDN的职能。
+ * Partition: by IP, by Some Field(City), by hash+cluster weight
+ * cluster in the same data center.(distance)
+
+Manage the DB Cluster
+
+Manage the Database
+  * Database Name
+  * DB Cluster: Partition Master
+  * DB Cluster: Slave
+  * DB Cluster: Partition Master
+
+### DB Cluster Controller
+
+* Manage the Nodes
+* Hash (u can choose one when creating: consitency hasing or others)
+* DB Redirection: Only provide a Node IP for a key to redirect.
+
+### DB Node Controller
+
+* Control the DB
+* DB Storage Engine Proxy
+
+### iDB Storage Engine
+
+the data stores here.
+
 
 iDB 的数据和类型
 ----------------
-
 
 iDB 数据库的数据项是由Key和Value组成，通过Key可以得到唯一对应的Value。
 道家有云，道生一，一生二，二生三，三生万物：
@@ -107,7 +179,10 @@ Key 可以是有层级的，类似于目录的层级结构。
 
 ### Value
 
-### 简单类型
+值类型可以分为：简单类型和复杂类型。简单类型总是单一值类型。
+而复杂类型则是简单类型的复合而成的类型。
+
+### 简单值类型
 
 * String
 * Integer
@@ -116,7 +191,7 @@ Key 可以是有层级的，类似于目录的层级结构。
 * Float
 * Blob
 
-### 复杂类型
+### 复杂值类型
 
 * Dict
   * Object
