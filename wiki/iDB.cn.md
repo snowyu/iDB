@@ -78,10 +78,10 @@ iDB 的数据呈现：
 iDB的架构体系
 -------------
 
-* iDB Cloud Controller
-* iDB Cluster Controller
-* iDB Node Controller
-* iDB Storage Engine
+* iDB 云控制器Cloud Controller
+* iDB 集群控制器Cluster Controller
+* iDB 节点控制器Node Controller
+* iDB 存储引擎Storage Engine
 
 <pre>
 
@@ -109,44 +109,44 @@ DBCloud Controller
 
 </pre>
 
-### DB Cloud Controller
+### iDB Cloud Controller
 
-The DB cloud controller (DBCLC) is the top-level component, with one of each in a DB cloud installation. 
-The DB cloud controller offers RESTful API and a Web interface to the outside world. In addition to handling incoming requests, the DB cloud controller performs high-level resource scheduling 
-and system accounting.
+iDB云控制器(iDBCLC) 是暴露在互联网上顶层组件。为外部世界提供RESTful API以及Web接口，
+它处理客户请求，并执行高层资源规划和帐户管理。
 
-The DB Cloud Controller(DBCLC) can aggregate resources from multiple clusters (i.e., collections of nodes sharing a LAN segment, possibly residing behind a firewall). Each DB cluster needs a DB cluster controller (DBCC) for cluster-level scheduling and network control.
+iDB云控制器(iDBCLC) iDB云控制器(iDBCLC) iDB云控制器(iDBCLC) iDB云控制器(iDBCLC)根据
+需要可以从多个集群中聚集资源.
 
-manage the relation of the cluster for a Database:
+管理数据库集群关系：
 
- * Master Replication
- * Slave Replication()
- * Cache Replication(if not find in local goto master to fetch, store only hot data ) 看上去DBCLC 需要有CDN的职能。
- * Partition: by IP, by Some Field(City), by hash+cluster weight
- * cluster in the same data center.(distance)
+ * Master Replication 关系
+ * Slave Replication 关系
+ * Cache Replication(热点数据存储，当缓存没有的时候从 master 集群取)
+ * 分区Partition: by IP, by Some Field(City), by hash+cluster weight
+ * 同一数据中心的集群.(distance)
 
-Manage the DB Cluster
+注册管理集群
 
-Manage the Database
+管理数据库：
   * Database Name
   * DB Cluster: Partition Master
   * DB Cluster: Slave
   * DB Cluster: Partition Master
 
-### DB Cluster Controller
+### iDB 集群控制器
 
-* Manage the Nodes
-* Hash (u can choose one when creating: consitency hasing or others)
-* DB Redirection: Only provide a Node IP for a key to redirect.
+* 管理节点
+* 数据定位器Hash (在创建时候可以选择数据分散算法: 一致性hasing 或者其他)
+* 数据重定向Redirection: Only provide a Node IP for a key to redirect.
 
-### DB Node Controller
+### iDB 节点控制器
 
-* Control the DB
-* DB Storage Engine Proxy
+* 控制数据库
+* iDB 存储引擎代理(多数据存储引擎支持)
 
 ### iDB Storage Engine
 
-the data stores here.
+iDB自己的数据存储引擎.
 
 
 iDB 的数据和类型
