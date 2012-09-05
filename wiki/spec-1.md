@@ -77,11 +77,6 @@ the ".version" is the value type spec version if any.
   * .count(if it's size is too large)
   * .level(if it's size is too large)
   * .value: a item each line if it's size is not too large (optional)
-* Table<Dict>: the Item in Table is always the same type.
-  * .type: Table
-  * .count(if it's size is too large)
-  * .level(if it's size is too large)
-  * .value: a item each line if it's size is not too large (optional)
 
 * Item(Abstract):
   * Numberic(Abstract):
