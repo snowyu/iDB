@@ -30,6 +30,7 @@ And it can be set to update to the cache file only for simple type.
     * loadOnDemand:Boolean
     * storeInFile:Boolean
     * storeInXattr:Boolean
+    * pageSize: Integer  the max size of a page.
     * raiseError:Object
       * typeMissMatch:Boolean
 
@@ -83,6 +84,7 @@ And it can be set to update to the cache file only for simple type.
   * .value: a item each line if it's size is not too large (optional)
 * Table<Dict>: the Item in Table is always the same type.
   * .type: Table
+  * .fields  the fields and types of this table defined here.
   * .count(if it's size is too large)
   * .level(if it's size is too large)
   * .value: a item each line if it's size is not too large (optional)
