@@ -6,7 +6,7 @@ the key base on a special urlencode.
 the value only for file name base on a special urlencode.
 
 * key's SafeChars(DO NOT ESCAPED CHARS): [/,' ']
-* value's SafeChars: [' ']
+* value's SafeChars: [' '] when the value should be indexed.
 
 ## Key
 
@@ -22,10 +22,22 @@ the blob value in the cache file is a blob file name link.(maybe I can use the r
 And it can be set to update to the cache file only for simple type.
 
 
+### Value Format
+
+the value format should be binary or text, It's defined via the db meta infomation.
+
+#### binary
+
+#### Text
+
+the text is always utf-8 string.
+
 ## DB Meta Infomation (Root Dir)
 
 * .db/  Store the database meta infomation in the database root path.
   * version:Integer  the iDB Specification Version.
+  * format: String   the value format of this iDB. It should be binary, text(utf-8)
+                     the database meta informations are always text.
   * config:Object    the DB Configration (can be overload via application)
     * loadOnDemand:Boolean
     * storeInFile:Boolean
