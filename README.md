@@ -1,9 +1,16 @@
 iDB
 ===
 
-An efficient Key/Value Directory-Tree/Structured NoSQL distributed database core engine.
-The Next Generation Structed-Column Oriented Hierarchy Database -- iDB.
-
-iDB is the structured column oriented hierarchy data storage system.
+An efficient Structed-Column Oriented and Directory-Based Hierarchy Database.
+The new way to database engine.
 
 
+wiki
+----
+
+Specifications
+
+src
+---
+
+the implementation of languages to iDB.
