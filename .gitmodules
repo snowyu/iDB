@@ -7,3 +7,6 @@
 [submodule "src/idb.php"]
 	path = src/idb.php
 	url = https://github.com/clouddb/idb.php
+[submodule "src/idb.c"]
+	path = src/idb.c
+	url = https://github.com/snowyu/idb.c
