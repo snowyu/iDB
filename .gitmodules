@@ -10,3 +10,6 @@
 [submodule "src/idb.c"]
 	path = src/idb.c
 	url = https://github.com/snowyu/idb.c
+[submodule "src/idb.redis"]
+	path = src/idb.redis
+	url = https://github.com/snowyu/redis
