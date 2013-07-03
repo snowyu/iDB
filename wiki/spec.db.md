@@ -132,7 +132,55 @@ IndexDB由若干排序文件(IndexFile)组成，每一文件又由若干排序�
 
 简化，每一个文件只有一个排序块。
 
-当文件满了，增加新文件，移动一半的记录到新文件。
+当文件满了，增加3个新文件，移动3/4的记录到新文件,这样每一个文件都有1/4的记录。
+
+假设有 a,b,c,d 4个key, 文件最大存放为4.
+
+当插入 b1，发现已经达到最大记录，开始迁移数据：
+
+    1.idx: a
+    2.idx: b
+    3.idx: c
+    4.idx: d
+
+插入位置：二分查找, 4/2=2, 2.idx 的b.
+
+    (1+4)/2=2   2.idx: b < b1, 3.idx: c > b1
+                3.idx: b1, c
+    the 1.idx is the first one: so put it here:
+            1.idx: a, b1
+
+    //return the insert position
+    int binarySearch(int array[],int low,int high,int key)
+    {
+        //At the last position
+        if (key >= array[high]) {
+            return high;
+        }
+        //At the first position
+        if (key <= array[low]) {
+            return low;
+        }
+        int middle = 0;
+        while (low <= high) {
+            middle = (low+high)/2;
+            int middleValue = array[middle];
+            if (middleValue < key)
+                low = middle + 1;
+            else if (middleValue > key)
+                high = middle - 1;
+            else
+                return middle;
+        }
+        return middle;
+
+    }
+
+d1:
+
+    (1+4)/2=2   2.idx: b < d1, c < d1
+    (2+4)/2=3   3.idx: c < d1, d < d1
+    (4+4)/2=4   4.idx: d < d1
 
 
 ##### 操作
