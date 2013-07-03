@@ -130,6 +130,11 @@ IndexDB由若干排序文件(IndexFile)组成，每一文件又由若干排序�
 排序文件头中记录了该文件的最大Key是哪一个，以及记录条数，和各个块的使用情况。
 块也会记录该块中的最大key是哪一个.
 
+简化，每一个文件只有一个排序块。
+
+当文件满了，增加新文件，移动一半的记录到新文件。
+
+
 ##### 操作
 
 查记录key所在位置(应该在哪里插入),
@@ -211,23 +216,8 @@ Key[MaxKeySize] Offset length
 offset 为在文件中的偏移量。
 如果长度length为0表示，没有分区，key名就是直接读取的位置。
 
-保留一定区域的定长记录，可以分成4份,第一份为 0 Level, 2为 1 Level, n 为 n Level
-一个比一个长，那么一份总共可以记录的条数 = 4^n * BlockGap
-首先往 0 Level里面塞，塞满了，往 Level 1塞，记住 Level 1以后里面的全部是排好序的。
-只有Level 0 是没有排序的。
-
+保留一定区域的定长记录，可以分成4份,第一份为 0 Level, 2为 1 Level,..., 4 为 3 Level
 如果4份全部填满了。那么新开3个文件，将其中的4分之3都移走，这样每一个文件都有1/4。
-
-	L = sst_in_one(node->sst, &c); //以排好序的形式从磁盘取出
-
-	//NESSDB_SST_SEGMENT 总共分的4个文件(含自身)。
-    split = c / NESSDB_SST_SEGMENT; //每份的项数
-	mod = c % NESSDB_SST_SEGMENT;
-	k = split + mod; //得到切分点,
-
-在内存中记录各个index文件的数组称为: meta.nodes[3000] 固定3000个
-
-    nxt_idx = _get_idx(meta, L[k - 1].data) + 1; //取得L[k-1] key应该在哪一个index文件的在meta数组中的idx.
 
 
 Collection(List)类型的操作除了有GetAll之外，还有GetByPattern(Find)
